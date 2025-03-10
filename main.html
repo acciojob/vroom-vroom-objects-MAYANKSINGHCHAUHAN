@@ -1,16 +1,61 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Inheritance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .car-info {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <h1>Car Inheritance Example</h1>
+    <button onclick="displayCarInfo()">Show Car Info</button>
+    <div class="car-info" id="car-info"></div>
+    
+    <script>
+        // Car Constructor
+        function Car(make, model) {
+            this.make = make;
+            this.model = model;
+        }
 
+        // Add getMakeModel method to Car prototype
+        Car.prototype.getMakeModel = function() {
+            return `${this.make} ${this.model}`;
+        };
+
+        // SportsCar Constructor (inherits from Car)
+        function SportsCar(make, model, topSpeed) {
+            Car.call(this, make, model); // Call the Car constructor
+            this.topSpeed = topSpeed;
+        }
+
+        // Set up prototype inheritance
+        SportsCar.prototype = Object.create(Car.prototype);
+        SportsCar.prototype.constructor = SportsCar;
+
+        // Add getTopSpeed method to SportsCar prototype
+        SportsCar.prototype.getTopSpeed = function() {
+            return this.topSpeed;
+        };
+
+        function displayCarInfo() {
+            const car1 = new SportsCar("Ferrari", "Testarossa", 200);
+            const car2 = new SportsCar("Lamborghini", "Aventador", 217);
+            
+            document.getElementById("car-info").innerHTML = `
+                <p>${car1.getMakeModel()} - Top Speed: ${car1.getTopSpeed()} mph</p>
+                <p>${car2.getMakeModel()} - Top Speed: ${car2.getTopSpeed()} mph</p>
+            `;
+        }
+    </script>
 </body>
-
 </html>
